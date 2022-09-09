@@ -10,22 +10,9 @@ import EssentialFeed
 
 class EssentialFeedAPIEndToEndTests: XCTestCase {
     
-    func getImage() {
-        let session = URLSession(configuration: .default)
-        let url = URL(string: "https://essentialdeveloper.com/feed-case-study/test-api/feed")!
-        session.dataTask(with: url) { (data, response, error) in
-            print("error:\(error)")
-            print("--------------")
-            print("response:\(response)")
-            print("--------------")
-            print("data:\(data)")
-        }.resume()
-    }
-
 
     func test_endToEndTestServerGetFeedResult_matchesFixedAccountData() {
-        let testServerURL = URL(string: "https://essantialdeveloper.com/feed-case-study/test-api/feed")!
-//        getImage()
+        let testServerURL = URL(string: "https://essentialdeveloper.com/feed-case-study/test-api/feed")!
         let client = URLSessionHTTPClient()
         let loader = RemoteFeedLoader(client: client, url: testServerURL)
 
@@ -37,7 +24,7 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
             receivedResult = result
             exp.fulfill()
         }
-        wait(for: [exp], timeout: 5.0)
+        wait(for: [exp], timeout: 15.0)
 
         switch receivedResult {
         case let .success(items)?:

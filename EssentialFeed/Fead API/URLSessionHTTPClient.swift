@@ -15,10 +15,13 @@ public class URLSessionHTTPClient: HTTPClient {
     }
 
     public func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
-        session.dataTask(with: url) { _, _, error in
+        session.dataTask(with: url) { data, response, error in
             if let error = error {
                 completion(.failure(error))
             }
+            guard let data = data, let response = response as? HTTPURLResponse else { return }
+            
+            completion(.success(data, response))
         }.resume()
     }
 }

@@ -21,6 +21,24 @@ class URLSessionHTTPClientTests: XCTestCase {
         URLProtocolStub.stopInterceptingRequests()
     }
     
+    func test_getFromURL_failsOnAllNilValues() {
+        URLProtocolStub.stub(data: nil, response: nil, error: nil)
+
+        let exp = expectation(description: "Wait for completion")
+        
+        makeSUT().get(from: anyURL()) { result in
+            switch result {
+            case .failure:
+                break
+            default:
+                XCTFail("Expected failure, got \(result) instead")
+            }
+            
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 3.0)
+    }
+    
     func test_getFromURL_performGetRequestWithURL() {
         let url = anyURL()
         let exp = expectation(description: "Wait for request")
@@ -54,7 +72,6 @@ class URLSessionHTTPClientTests: XCTestCase {
     }
 
     // MARK: - Helpers
-    
     private class URLProtocolStub: URLProtocol {
         private static var stub: Stub?
         private static var requestObserver: ((URLRequest) -> Void)?

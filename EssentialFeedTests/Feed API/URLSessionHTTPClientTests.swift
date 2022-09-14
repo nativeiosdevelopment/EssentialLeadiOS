@@ -16,40 +16,47 @@ class URLSessionHTTPClientTests: XCTestCase {
         URLProtocolStub.startInterceptingRequests()
     }
     
-    override class func tearDown() {
-        super.tearDown()
-        URLProtocolStub.stopInterceptingRequests()
-    }
     
-    func test_getFromURL_failsOnAllNilValues() {
+    func test_getFromURL_failsOnAllInvalidRepresentationCases() {
+        let anyData = Data("any data".utf8)
+        let nonHTTPURLResponse = URLResponse(url: anyURL(), mimeType: nil, expectedContentLength: 0, textEncodingName: nil)
+        let anyHTTPURLResponse = HTTPURLResponse(url: anyURL(), statusCode: 200, httpVersion: nil, headerFields: nil)
+        
         XCTAssertNotNil(resultErrorFor(data: nil, response: nil, error: nil))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: nonHTTPURLResponse, error: nil))
+        XCTAssertNotNil(resultErrorFor(data: nil, response: anyHTTPURLResponse, error: nil))
+        XCTAssertNotNil(resultErrorFor(data: anyData, response: nil, error: nil))
     }
     
-    func test_getFromURL_performGetRequestWithURL() {
+    func test_getFromURL_performsGETRequestWithURL() {
         let url = anyURL()
         let exp = expectation(description: "Wait for request")
+        
         URLProtocolStub.observeRequests { request in
-            XCTAssertEqual(request.httpMethod, "GET")
             XCTAssertEqual(request.url, url)
+            XCTAssertEqual(request.httpMethod, "GET")
             exp.fulfill()
         }
+
         makeSUT().get(from: url) { _ in }
-        
+
         wait(for: [exp], timeout: 1.0)
     }
     
     func test_getFromURL_failsOnRequestError() {
-        let requestError = NSError(domain: "any error", code: 1)
+        URLProtocolStub.startInterceptingRequests()
+        let requestError = anyNSError()
         guard let receivedError = resultErrorFor(data: nil, response: nil, error: requestError) as? NSError else { return }
-
+        
         XCTAssertEqual(receivedError.domain, requestError.domain)
         XCTAssertEqual(receivedError.code, requestError.code)
     }
+    
 
     // MARK: - Helpers
     private class URLProtocolStub: URLProtocol {
         private static var stub: Stub?
-        private static var requestObserver: ((URLRequest) -> Void)?
+        static var requestObserver: ((URLRequest) -> Void)?
 
         private struct Stub {
             let data: Data?
@@ -126,7 +133,12 @@ private extension URLSessionHTTPClientTests {
         }
         
         wait(for: [exp], timeout: 1.0)
+        URLProtocolStub.stopInterceptingRequests()
         return receivedError
+    }
+    
+    private func anyNSError() -> NSError {
+        return NSError(domain: "any error", code: 0)
     }
     
     func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> URLSessionHTTPClient {

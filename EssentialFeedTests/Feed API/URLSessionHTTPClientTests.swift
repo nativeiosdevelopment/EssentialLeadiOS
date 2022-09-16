@@ -10,33 +10,40 @@ import EssentialFeed
 
 
 class URLSessionHTTPClientTests: XCTestCase {
+    
+    override func setUp() {
+        super.setUp()
+        URLProtocolStub.startInterceptingRequests()
+    }
+        
+    override func tearDown() {
+        super.tearDown()
+        URLProtocolStub.stopInterceptingRequests()
+    }
         
     func test_getFromURL_performsGETRequestWithURL() {
-        URLProtocolStub.startInterceptingRequests()
         let url = anyURL()
         let exp = expectation(description: "Wait for request")
-        
+
         URLProtocolStub.observeRequests { request in
             XCTAssertEqual(request.url, url)
             XCTAssertEqual(request.httpMethod, "GET")
             exp.fulfill()
         }
-        
+
         makeSUT().get(from: url) { result in }
-        
+
         wait(for: [exp], timeout: 1.0)
-        URLProtocolStub.stopInterceptingRequests()
     }
-    
+
     func test_getFromURL_failsOnRequestError() {
-        URLProtocolStub.startInterceptingRequests()
         let requestError = NSError(domain: "any error", code: 0)
         guard let receivedError = resultErrorFor(data: nil, response: nil, error: requestError) as? NSError else { return }
-        
+
         XCTAssertEqual(receivedError.domain, requestError.domain)
         XCTAssertEqual(receivedError.code, requestError.code)
     }
-    
+
     func test_getFromURL_failsOnAllInvalidRepresentationCases() {
         XCTAssertNotNil(resultErrorFor(data: nil, response: nil, error: nil))
         XCTAssertNotNil(resultErrorFor(data: nil, response: nonHTTPURLResponse(), error: nil))
@@ -47,6 +54,29 @@ class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: nonHTTPURLResponse(), error: anyNSError()))
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyHTTPURLResponse(), error: anyNSError()))
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: nonHTTPURLResponse(), error: nil))
+    }
+
+    func test_getFromURL_succeedsOnHTTPURLResponseWithData() {
+
+        let data = anyData()
+        let response = anyHTTPURLResponse()
+        URLProtocolStub.stub(data: data, response: response, error: nil)
+
+        let exp = expectation(description: "Wait for completion")
+        exp.assertForOverFulfill = false
+
+        makeSUT().get(from: anyURL()) { result in
+            switch result {
+            case let .success(receivedData, receivedResponse):
+                XCTAssertEqual(receivedData, data)
+                XCTAssertEqual(receivedResponse.url, response.url)
+                XCTAssertEqual(receivedResponse.statusCode, response.statusCode)
+            default:
+                XCTFail("Expected success, got \(result) instead")
+            }
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
     }
     
     // MARK: - Helpers
@@ -76,6 +106,11 @@ class URLSessionHTTPClientTests: XCTestCase {
             URLProtocol.unregisterClass(URLProtocolStub.self)
             stub = nil
             requestObserver = nil
+        }
+        
+        static func removeStub() {
+            requestObserver = nil
+            stub = nil
         }
 
         override class func canInit(with request: URLRequest) -> Bool {
@@ -110,11 +145,11 @@ class URLSessionHTTPClientTests: XCTestCase {
 private extension URLSessionHTTPClientTests {
     
     func resultErrorFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> Error? {
-        URLProtocolStub.startInterceptingRequests()
         URLProtocolStub.stub(data: data, response: response, error: error)
 
         let sut = makeSUT(file: file, line: line)
         let exp = expectation(description: "Wait for completion")
+        exp.assertForOverFulfill = false
         
         var receivedError: Error?
         
@@ -125,12 +160,10 @@ private extension URLSessionHTTPClientTests {
             default:
                 XCTFail("Expected failure, got \(result) instead", file: file, line: line)
             }
-            
             exp.fulfill()
         }
         
         wait(for: [exp], timeout: 1.0)
-        URLProtocolStub.stopInterceptingRequests()
         return receivedError
     }
     

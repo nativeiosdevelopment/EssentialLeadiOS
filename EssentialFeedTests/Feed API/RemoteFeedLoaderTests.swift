@@ -29,7 +29,7 @@ class RemoteFeedLoaderTests: XCTestCase {
     
     func test_loadTwice_requestDataFromURL() {
         let url = URL(string: "https://www.a-given-url.com")!
-        let (sut, client) =  makeSUT(url: url)
+        let (sut, client) = makeSUT(url: url)
 
         sut.load() { _ in }
         sut.load() { _ in }
@@ -155,7 +155,7 @@ private extension RemoteFeedLoaderTests {
                 XCTAssertEqual(receivedError, expectedError, file: file, line: line)
                 
             default:
-                XCTFail("Expected result \(expectedResult) got \(receivedResult) insteas", file: file, line: line)
+                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead", file: file, line: line)
             }
             
             exp.fulfill()

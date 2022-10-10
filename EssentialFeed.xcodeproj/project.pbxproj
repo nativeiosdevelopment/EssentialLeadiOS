@@ -24,6 +24,7 @@
 		52B1DD4F28CB311100C2F159 /* XCTTestCaseMemoryLeaksTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1DD4E28CB311100C2F159 /* XCTTestCaseMemoryLeaksTracking.swift */; };
 		52B1DD5028CB315300C2F159 /* XCTTestCaseMemoryLeaksTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1DD4E28CB311100C2F159 /* XCTTestCaseMemoryLeaksTracking.swift */; };
 		52D2504028F4590D002042C6 /* LocalFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D2503F28F4590D002042C6 /* LocalFeedLoader.swift */; };
+		52D2504228F45A04002042C6 /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D2504128F45A04002042C6 /* FeedStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		525159B528E450D800D68232 /* CacheFeedUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheFeedUseCaseTests.swift; sourceTree = "<group>"; };
 		52B1DD4E28CB311100C2F159 /* XCTTestCaseMemoryLeaksTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTTestCaseMemoryLeaksTracking.swift; sourceTree = "<group>"; };
 		52D2503F28F4590D002042C6 /* LocalFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedLoader.swift; sourceTree = "<group>"; };
+		52D2504128F45A04002042C6 /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				52D2503F28F4590D002042C6 /* LocalFeedLoader.swift */,
+				52D2504128F45A04002042C6 /* FeedStore.swift */,
 			);
 			path = "Feed Cache";
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52D2504228F45A04002042C6 /* FeedStore.swift in Sources */,
 				5219847028CA61A000B476BB /* FeedItemsMapper.swift in Sources */,
 				5219846D28CA619A00B476BB /* FeedItem.swift in Sources */,
 				5219846C28CA619700B476BB /* FeedLoader.swift in Sources */,

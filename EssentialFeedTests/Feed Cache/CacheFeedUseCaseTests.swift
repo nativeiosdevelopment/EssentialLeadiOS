@@ -25,10 +25,17 @@ class LocalFeedLoader {
             if let cacheDeletionError = error {
                 completion(cacheDeletionError)
             } else {
-                self.store.insert(items: items, timestamp: self.currentDate()) { [ weak self] error in
-                    guard self != nil else { return }
-                }
+                self.cache(items: items, with: completion )
             }
+        }
+    }
+}
+
+private extension LocalFeedLoader {
+    func cache(items: [FeedItem], with completion: @escaping (Error?) -> Void) {
+        self.store.insert(items: items, timestamp: currentDate()) { [weak self] error in
+            guard self != nil else { return }
+            completion(error)
         }
     }
 }

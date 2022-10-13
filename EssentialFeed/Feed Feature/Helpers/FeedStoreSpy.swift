@@ -8,15 +8,21 @@
 import EssentialFeed
 
 class FeedStoreSpy: FeedStore {
+
     private var deletionCompletions = [DeletionCompletion]()
     private var insertionCompletions = [InsertionCompletion]()
     
     enum ReceivedMessage: Equatable {
         case deletedCacheFeed
         case insert([LocalFeedImage], Date)
+        case retrieve
     }
     
     private(set) var receivedMessages = [ReceivedMessage]()
+    
+    func retrieve() {
+        receivedMessages.append(.retrieve)
+    }
     
     func deleteCacheFeed(completion: @escaping DeletionCompletion) {
         deletionCompletions.append(completion)

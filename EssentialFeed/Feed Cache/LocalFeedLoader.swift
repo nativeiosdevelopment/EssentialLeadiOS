@@ -30,6 +30,10 @@ public final class LocalFeedLoader {
             }
         }
     }
+    
+    public func load() {
+        store.retrieve()
+    }
 }
 
 private extension LocalFeedLoader {

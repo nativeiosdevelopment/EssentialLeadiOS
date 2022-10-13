@@ -156,13 +156,13 @@ private extension CacheFeedUseCaseTests {
         return NSError(domain: "any error", code: 0)
     }
     
-    func uniqueItem() -> FeedItem {
-        return FeedItem(id: UUID(), description: "any", location: "any", imageURL: anyURL())
+    func uniqueItem() -> FeedImage {
+        return FeedImage(id: UUID(), description: "any", location: "any", url: anyURL())
     }
     
-    func uniqueItems() -> (models: [FeedItem], locals: [LocalFeedImage]) {
+    func uniqueItems() -> (models: [FeedImage], locals: [LocalFeedImage]) {
         let models = [uniqueItem(), uniqueItem()]
-        let locals = models.map { LocalFeedImage(id: $0.id, description: $0.description, location: $0.location, imageURL: $0.imageURL) }
+        let locals = models.map { LocalFeedImage(id: $0.id, description: $0.description, location: $0.location, url: $0.url) }
         
         return (models, locals)
     }

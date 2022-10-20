@@ -12,26 +12,26 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
 
     func test_init() {
         let (_, store) = makeSUT()
-        
+
         XCTAssertEqual(store.receivedMessages, [])
     }
-    
+
     func test_load_requestCacheRetrieval() {
         let (sut, store) = makeSUT()
         sut.load { _ in }
-        
+
         XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
-    
+
     func test_load_failsOnRetrievalError() {
         let (sut, store) = makeSUT()
         let retrievalError = anyNSError()
-        
+
         expect(sut, toCompleteWith: .failure(retrievalError)) {
             store.completeRetrieval(with: retrievalError)
         }
     }
-    
+
     func test_load_noDeliversOnEmptyCache() {
         let (sut, store) = makeSUT()
 
@@ -39,7 +39,7 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
             store.completeRetrievalWithEmptyCache()
         }
     }
-    
+
     func test_load_deliversCachedImagesOnLessThanSevendaysOldCache() {
         let feed = uniqueImageFeed()
         let fixedCurrentDate = Date()
@@ -47,8 +47,19 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
         let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
 
         expect(sut, toCompleteWith: .success(feed.models)) {
-            store.completeRetrieval(with: feed.locals, timestamp: fixedCurrentDate)
+            store.completeRetrieval(with: feed.locals, timestamp: lessThanSevenDaysOldTimestamp)
         }
+    }
+    
+    func test_load_deliversNoImagesOnSevenDaysOldCache() {
+        let feed = uniqueImageFeed()
+        let fixedCurrentDate = Date()
+        let sevenDaysOldTimestamp = fixedCurrentDate.adding(days: -7)
+        let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
+
+        expect(sut, toCompleteWith: .success([]), when: {
+            store.completeRetrieval(with: feed.locals, timestamp: sevenDaysOldTimestamp)
+        })
     }
 }
 

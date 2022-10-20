@@ -28,6 +28,7 @@
 		52D2504228F45A04002042C6 /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D2504128F45A04002042C6 /* FeedStore.swift */; };
 		52D2504428F46D80002042C6 /* RemoteFeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D2504328F46D80002042C6 /* RemoteFeedItem.swift */; };
 		52D2504628F46E02002042C6 /* LocalFeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D2504528F46E02002042C6 /* LocalFeedItem.swift */; };
+		52FCE35D290145B70012BBF5 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FCE35C290145B70012BBF5 /* Date+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		52D2504128F45A04002042C6 /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
 		52D2504328F46D80002042C6 /* RemoteFeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedItem.swift; sourceTree = "<group>"; };
 		52D2504528F46E02002042C6 /* LocalFeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedItem.swift; sourceTree = "<group>"; };
+		52FCE35C290145B70012BBF5 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				52D1A28728F86E2B0099D27F /* FeedStoreSpy.swift */,
+				52FCE35C290145B70012BBF5 /* Date+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				52D2504628F46E02002042C6 /* LocalFeedItem.swift in Sources */,
+				52FCE35D290145B70012BBF5 /* Date+Extensions.swift in Sources */,
 				52D2504228F45A04002042C6 /* FeedStore.swift in Sources */,
 				5219847028CA61A000B476BB /* FeedItemsMapper.swift in Sources */,
 				5219846D28CA619A00B476BB /* FeedImage.swift in Sources */,

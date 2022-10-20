@@ -39,6 +39,17 @@ final class LoadFeedFromCacheUseCaseTests: XCTestCase {
             store.completeRetrievalWithEmptyCache()
         }
     }
+    
+    func test_load_deliversCachedImagesOnLessThanSevendaysOldCache() {
+        let feed = uniqueImageFeed()
+        let fixedCurrentDate = Date()
+        let lessThanSevenDaysOldTimestamp = fixedCurrentDate.adding(days: 7).adding(second: 1)
+        let (sut, store) = makeSUT(currentDate: { fixedCurrentDate })
+
+        expect(sut, toCompleteWith: .success(feed.models)) {
+            store.completeRetrieval(with: feed.locals, timestamp: fixedCurrentDate)
+        }
+    }
 }
 
 private extension LoadFeedFromCacheUseCaseTests {
@@ -71,5 +82,20 @@ private extension LoadFeedFromCacheUseCaseTests {
     
     func anyNSError() -> NSError {
         return NSError(domain: "any error", code: 0)
+    }
+    
+    func uniqueImage() -> FeedImage {
+        return FeedImage(id: UUID(), description: "any", location: "any", url: anyURL())
+    }
+    
+     func uniqueImageFeed() -> (models: [FeedImage], locals: [LocalFeedImage]) {
+        let models = [uniqueImage(), uniqueImage()]
+        let locals = models.map { LocalFeedImage(id: $0.id, description: $0.description, location: $0.location, url: $0.url) }
+        
+        return (models, locals)
+    }
+    
+    func anyURL() -> URL {
+        return URL(string: "http://any-url.com")!
     }
 }

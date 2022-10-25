@@ -15,7 +15,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
         let (_, store) = makeSUT()
         _ = LocalFeedLoader(store: store)
         
-        XCTAssertEqual(store.receivedMessages, [] )
+        XCTAssertEqual(store.receivedMessages, [])
     }
     
     func test_save_requestCacheDeletion() {

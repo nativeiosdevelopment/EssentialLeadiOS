@@ -24,7 +24,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
         
         sut.save(feed.models , completion: { _ in })
         
-        XCTAssertEqual(store.receivedMessages, [.deletedCacheFeed])
+        XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed])
     }
     
     func test_save_doesNotRequestCacheInsertionOnDeletionError() {
@@ -35,7 +35,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
         sut.save(feed.models, completion: { _ in })
         store.completeDeletion(with: deletionError)
         
-        XCTAssertEqual(store.receivedMessages, [.deletedCacheFeed])
+        XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed])
     }
         
     func test_save_requestsNewCacheInsertionWithTimestampOnSuccessfulDeletion() {
@@ -47,7 +47,7 @@ final class CacheFeedUseCaseTests: XCTestCase {
         
         store.completeDeletionSuccessfully()
         
-        XCTAssertEqual(store.receivedMessages, [.deletedCacheFeed, .insert(feed.locals, timestamp)])
+        XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed, .insert(feed.local, timestamp)])
     }
     
     func test_save_failsOnDeletionError() {
@@ -122,11 +122,11 @@ private extension CacheFeedUseCaseTests {
         return FeedImage(id: UUID(), description: "any", location: "any", url: anyURL())
     }
     
-     func uniqueImageFeed() -> (models: [FeedImage], locals: [LocalFeedImage]) {
+     func uniqueImageFeed() -> (models: [FeedImage], local: [LocalFeedImage]) {
         let models = [uniqueImage(), uniqueImage()]
-        let locals = models.map { LocalFeedImage(id: $0.id, description: $0.description, location: $0.location, url: $0.url) }
+        let local = models.map { LocalFeedImage(id: $0.id, description: $0.description, location: $0.location, url: $0.url) }
         
-        return (models, locals)
+        return (models, local)
     }
     
     func anyURL() -> URL {

@@ -54,9 +54,14 @@ public final class LocalFeedLoader {
         }
     }
     
-    public func validateCache(completion: @escaping (LoadResult) -> Void) {
-        store.retrieve { _ in }
-        store.deleteCachedFeed { _ in }
+    public func validateCache() {
+        store.retrieve { [unowned self] result in
+            switch result {
+            case .failure:
+                self.store.deleteCachedFeed { _ in }
+            default: break
+            }
+        }
     }
 }
 

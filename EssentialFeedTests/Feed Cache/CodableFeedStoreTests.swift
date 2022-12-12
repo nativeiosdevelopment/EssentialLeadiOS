@@ -187,7 +187,7 @@ final class CodableFeedStoreTests: XCTestCase, FailableFeedStoreSpecs {
         
         // When
         let op1 = expectation(description: "Operation 1")
-        sut.insert(feed: uniqueImageFeed().local, timestamp: Date()) { _ in
+        sut.insert(uniqueImageFeed().local, timestamp: Date()) { _ in
             completedOperationsInOrder.append(op1)
             op1.fulfill()
         }
@@ -199,7 +199,7 @@ final class CodableFeedStoreTests: XCTestCase, FailableFeedStoreSpecs {
         }
         
         let op3 = expectation(description: "Operation 3")
-        sut.insert(feed: uniqueImageFeed().local, timestamp: Date()) { _ in
+        sut.insert(uniqueImageFeed().local, timestamp: Date()) { _ in
             completedOperationsInOrder.append(op3)
             op3.fulfill()
         }

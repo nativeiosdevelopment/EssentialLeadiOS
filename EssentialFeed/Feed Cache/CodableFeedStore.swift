@@ -59,7 +59,7 @@ public class CodableFeedStore: FeedStore {
         }
     }
     
-    public func insert(feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
+    public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
         let storeURL = storeURL
         queue.async(flags: .barrier) {
             do {

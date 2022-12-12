@@ -108,7 +108,7 @@ extension FeedStoreSpecs where Self: XCTestCase {
     func insert(_ cache: (feed: [LocalFeedImage], timestamp: Date), to sut: FeedStore) -> Error? {
         let exp = expectation(description: "Wait for cache insertion")
         var insertionError: Error?
-        sut.insert(feed: cache.feed, timestamp: cache.timestamp) { receivedInsertionError in
+        sut.insert(cache.feed, timestamp: cache.timestamp) { receivedInsertionError in
             XCTAssertNil(insertionError, "Expected feed to be inserted successfully")
             insertionError = receivedInsertionError
             exp.fulfill()

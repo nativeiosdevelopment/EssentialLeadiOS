@@ -38,7 +38,16 @@ public final class CoreDataFeedStore: FeedStore {
         context.perform {
             do {
                 let managedCache = ManagedCache(context: context)
-                managedCache.feed = ManagedFeedImage.images(from: feed, in: context)
+                managedCache.timestamp = timestamp
+                managedCache.feed = NSOrderedSet(array: feed.map { local in
+                    let managed = ManagedFeedImage(context: context)
+                    managed.id = local.id
+                    managed.imageDescription = local.description
+                    managed.location = local.location
+                    managed.url = local.url
+                    return managed
+                })
+
                 try context.save()
                 completion(nil)
             } catch {
@@ -85,6 +94,7 @@ private class ManagedFeedImage: NSManagedObject {
         return LocalFeedImage(id: id, description: imageDescription, location: location, url: url)
     }
 }
+
 
 private extension NSPersistentContainer {
     enum LoadingError: Swift.Error {

@@ -10,7 +10,7 @@ import EssentialFeed
 
 final class CoreDataFeedStoreTests: XCTestCase, FeedStoreSpecs {
     
-    func test_retrieve_deliversEmptyOnEmptyCache() {
+    func test_retrieve_hasNoSideEffectsOnEmptyCache() {
         // Given
         let sut = makeSUT()
         
@@ -18,10 +18,21 @@ final class CoreDataFeedStoreTests: XCTestCase, FeedStoreSpecs {
         // no insertion
         
         // Then
-        assertThatRetrieveDeliversEmptyOnEmptyCache(on: sut)
+        assertThatRetrieveHasNoSideEffectsOnEmptyCache(on: sut)
     }
     
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() {
+        // Given
+        let sut = makeSUT()
+
+        // When
+        // no insertion
+        
+        // Then
+        assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut)
+    }
+    
+    func test_retrieve_deliversEmptyOnEmptyCache() {
         // Given
 
         
@@ -29,13 +40,8 @@ final class CoreDataFeedStoreTests: XCTestCase, FeedStoreSpecs {
         // no insertion
         
         // Then
-//        assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut)
     }
-    
-    func test_retrieve_hasNoSideEffectsOnEmptyCache() {
         
-    }
-    
     func test_retrieve_hasNoSideEffectsOnNonEmptyCache() {
         
     }

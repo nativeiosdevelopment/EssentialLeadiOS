@@ -39,7 +39,7 @@ final class CodableFeedStoreTests: XCTestCase, FailableFeedStoreSpecs {
         // no insertion
         
         // Then
-        assertThatRetrieveHasNoSideEffecsOnEmptyCache(on: sut)
+        assertThatRetrieveHasNoSideEffectsOnEmptyCache(on: sut)
     }
     
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() {

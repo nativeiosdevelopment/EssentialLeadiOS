@@ -11,65 +11,69 @@ import EssentialFeed
 final class CoreDataFeedStoreTests: XCTestCase, FeedStoreSpecs {
     
     func test_retrieve_hasNoSideEffectsOnEmptyCache() {
-        // Given
+        
         let sut = makeSUT()
         
-        // When
+        
         // no insertion
         
-        // Then
+        
         assertThatRetrieveHasNoSideEffectsOnEmptyCache(on: sut)
     }
     
     func test_retrieve_deliversFoundValuesOnNonEmptyCache() {
-        // Given
+        
         let sut = makeSUT()
 
-        // When
+        
         // no insertion
         
-        // Then
+        
         assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut)
     }
     
     func test_retrieve_hasNoSideEffectsOnNonEmptyCache() {
-        // Given
+        
         let sut = makeSUT()
         
-        // When
+        
         // no insertion
         
-        // Then
+        
         assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on: sut)
     }
     
     func test_insert_deliversNoErrorOnEmptyCache() {
-        // Given
+
         let sut = makeSUT()
-        
-        // When
-        // no insertion
-        
-        // Then
+
         assertThatInsertDeliversNoErrorOnEmptyCache(on: sut)
     }
     
-    func test_retrieve_deliversEmptyOnEmptyCache() {
-        // Given
-
-        
-        // When
-        // no insertion
-        
-        // Then
-    }
-    
     func test_insert_deliversNoErrorOnNonEmptyCache() {
-        
+        let sut = makeSUT()
+
+        assertThatInsertDeliversNoErrorOnNonEmptyCache(on: sut)
     }
     
     func test_insert_overridesPreviouslyInsertedCacheValues() {
+        let sut = makeSUT()
+
+        assertThatInsertOverridesPreviouslyInsertedCacheValues(on: sut)
+    }
+    
+    func test_retrieve_deliversEmptyOnEmptyCache() {
         
+
+        
+        
+        // no insertion
+        
+        
+    }
+    
+    func test_delete_emptiesPreviouslyInsertedCache() {
+
     }
     
     func test_delete_deliversNoErrorOnEmptyCache() {
@@ -84,9 +88,7 @@ final class CoreDataFeedStoreTests: XCTestCase, FeedStoreSpecs {
         
     }
     
-    func test_delete_emptiesPreviouslyInsertedCache() {
-        
-    }
+
     
 }
 

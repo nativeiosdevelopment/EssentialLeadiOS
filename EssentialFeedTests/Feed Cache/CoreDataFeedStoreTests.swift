@@ -14,10 +14,6 @@ final class CoreDataFeedStoreTests: XCTestCase, FeedStoreSpecs {
         
         let sut = makeSUT()
         
-        
-        // no insertion
-        
-        
         assertThatRetrieveHasNoSideEffectsOnEmptyCache(on: sut)
     }
     
@@ -25,20 +21,12 @@ final class CoreDataFeedStoreTests: XCTestCase, FeedStoreSpecs {
         
         let sut = makeSUT()
 
-        
-        // no insertion
-        
-        
         assertThatRetrieveDeliversFoundValuesOnNonEmptyCache(on: sut)
     }
     
     func test_retrieve_hasNoSideEffectsOnNonEmptyCache() {
         
         let sut = makeSUT()
-        
-        
-        // no insertion
-        
         
         assertThatRetrieveHasNoSideEffectsOnNonEmptyCache(on: sut)
     }
@@ -64,11 +52,6 @@ final class CoreDataFeedStoreTests: XCTestCase, FeedStoreSpecs {
     
     func test_retrieve_deliversEmptyOnEmptyCache() {
         
-
-        
-        
-        // no insertion
-        
         
     }
     
@@ -77,19 +60,20 @@ final class CoreDataFeedStoreTests: XCTestCase, FeedStoreSpecs {
     }
     
     func test_delete_deliversNoErrorOnEmptyCache() {
-        
+        let sut = makeSUT()
+
+        assertThatDeleteDeliversNoErrorOnEmptyCache(on: sut)
     }
     
     func test_delete_hasNoSideEffectsOnEmptyCache() {
-        
+        let sut = makeSUT()
+
+        assertThatDeleteHasNoSideEffectsOnEmptyCache(on: sut)
     }
     
     func test_delete_deliversNoErrorOnNonEmptyCache() {
         
     }
-    
-
-    
 }
 
 private extension CoreDataFeedStoreTests {

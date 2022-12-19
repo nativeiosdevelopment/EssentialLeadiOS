@@ -247,6 +247,7 @@
 		52BA1E1B294743D000E5AA05 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				52BA1E1729473DF200E5AA05 /* CoreDataFeedStore.swift */,
 				52BA1E1C2947441B00E5AA05 /* FeedStore.xcdatamodeld */,
 			);
 			path = CoreData;
@@ -270,7 +271,6 @@
 				52D2504528F46E02002042C6 /* LocalFeedImage.swift */,
 				5226019A291AC1BA000F3900 /* FeedCachePolicy.swift */,
 				52105A252938A7E60092A415 /* CodableFeedStore.swift */,
-				52BA1E1729473DF200E5AA05 /* CoreDataFeedStore.swift */,
 				52BA1E1A294743C600E5AA05 /* Infrastructure */,
 			);
 			path = "Feed Cache";

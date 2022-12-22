@@ -60,7 +60,6 @@ extension LocalFeedLoader: FeedLoader {
             }
         }
     }
-    
 }
 
 extension LocalFeedLoader {
